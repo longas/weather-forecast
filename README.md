@@ -1,30 +1,186 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# API endpoints
 
-## Getting Started
+Base URL: _[final vercel deployment URL]_/api
 
-First, run the development server:
+## Cities
 
-```bash
-npm run dev
-# or
-yarn dev
+**GET** `/`
+
+Returns a list of all cities.
+
+```json
+Response:
+
+[
+  {
+    "id": "zaragoza",
+    "data": {
+      "name": "Zaragoza",
+      "country": "Spain"
+    }
+  },
+  { ... },
+  { ... }
+]
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**GET** `/:id`
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+Retrieves the details of a city.
 
-## Learn More
+- id:
+  - zaragoza
+  - berlin
+  - new-york
 
-To learn more about Next.js, take a look at the following resources:
+```json
+Response:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+{
+  "name": "Zaragoza",
+  "country": "Spain"
+}
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Days
 
-## Deploy on Vercel
+**GET** `/:id/:day`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Retrieves the weather data of that day in the city.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- id:
+
+  - zaragoza
+  - berlin
+  - new-york
+
+- day:
+
+  - monday
+  - tuesday
+  - wednesday
+  - thursday
+  - friday
+  - saturday
+  - sunday
+
+```json
+Response:
+
+{
+  "forecast": "clear",
+  "average_temperature": 13,
+  "hourly_temperatures": [
+    {
+      "temperature": 9,
+      "forecast": "clear"
+    },
+    {
+      "temperature": 10,
+      "forecast": "partly-cloudy"
+    },
+    {
+      "forecast": "partly-cloudy",
+      "temperature": 10
+    },
+    { ... },
+    { ... }
+  ]
+}
+```
+
+**POST** `/:id/:day`
+
+Updates the hourly temperatures for that day and city.
+
+- id:
+
+  - zaragoza
+  - berlin
+  - new-york
+
+- day:
+
+  - monday
+  - tuesday
+  - wednesday
+  - thursday
+  - friday
+  - saturday
+  - sunday
+
+```json
+Payload example:
+
+[
+  {
+    "forecast": "clear",
+    "temperature": 9
+  },
+  {
+    "forecast": "partly-cloudy",
+    "temperature": 10
+  },
+  {
+    "forecast": "partly-cloudy",
+    "temperature": 10
+  },
+  { ... },
+  { ... }
+]
+```
+
+```json
+Response:
+
+{
+  "forecast": "clear",
+  "average_temperature": 13,
+  "hourly_temperatures": [
+    {
+      "forecast": "clear",
+      "temperature": 9
+    },
+    {
+      "forecast": "partly-cloudy",
+      "temperature": 10
+    },
+    {
+      "forecast": "partly-cloudy",
+      "temperature": 10
+    },
+    { ... },
+    { ... }
+  ]
+}
+```
+
+**DELETE** `/:id/:day`
+
+Deletes all weather data for a day and city.
+
+- id:
+
+  - zaragoza
+  - berlin
+  - new-york
+
+- day:
+
+  - monday
+  - tuesday
+  - wednesday
+  - thursday
+  - friday
+  - saturday
+  - sunday
+
+```json
+Response:
+
+{
+  "forecast": "",
+  "average_temperature": 0,
+  "hourly_temperatures": []
+}
+```
