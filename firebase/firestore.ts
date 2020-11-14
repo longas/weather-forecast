@@ -1,6 +1,8 @@
-import { initFirestore } from "./utils";
+import { getFirestore, DAYS } from "./utils";
 
-const db = initFirestore();
+const db = getFirestore();
+
+// GET
 
 export async function getCities() {
   try {
@@ -13,7 +15,7 @@ export async function getCities() {
   }
 }
 
-export async function getCityWeather(city: string) {
+export async function getCity(city: string) {
   try {
     const citySlug = city.toLowerCase();
     const cityRef = db.collection("cities").doc(citySlug);
@@ -26,12 +28,58 @@ export async function getCityWeather(city: string) {
 
 export async function getDay(day: string, city: string) {
   try {
-    const citySlug = city.toLowerCase();
     const daySlug = day.toLowerCase();
+    const citySlug = city.toLowerCase();
     const days = db.collection("days").doc(`${daySlug}_${citySlug}`);
     const doc = await days.get();
     return doc.exists ? doc.data() : null;
   } catch {
     throw new Error();
   }
+}
+
+// POST
+
+export async function updateDayTemperatures(
+  day: string,
+  city: string,
+  data: any
+) {
+  const daySlug = day.toLowerCase();
+  const citySlug = city.toLowerCase();
+  const ref = db.collection("days").doc(`${daySlug}_${citySlug}`);
+  const forecast = data[0].forecast;
+  const averageTemp = Math.round(
+    data.reduce((a: number, b: any) => a + b.temperature, 0) / data.length
+  );
+
+  return ref.update({
+    forecast,
+    average_temperature: averageTemp,
+    hourly_temperatures: data,
+  });
+}
+
+// DELETE
+
+export async function deleteCityTemperatures(city: string) {
+  const citySlug = city.toLowerCase();
+  const batch = db.batch();
+
+  for (const day of DAYS) {
+    const ref = db.collection("days").doc(`${day}_${citySlug}`);
+    batch.update(ref, { hourly_temperatures: [] });
+  }
+
+  return batch.commit();
+}
+
+export async function deleteDayTemperatures(day: string, city: string) {
+  const daySlug = day.toLowerCase();
+  const citySlug = city.toLowerCase();
+  const ref = db.collection("days").doc(`${daySlug}_${citySlug}`);
+
+  return ref.update({
+    hourly_temperatures: [],
+  });
 }
