@@ -1,4 +1,5 @@
-import { getFirestore, DAYS } from "./utils";
+import { City, Day } from "../types";
+import { DAYS, getFirestore } from "./utils";
 
 const db = getFirestore();
 
@@ -8,7 +9,10 @@ export async function getCities() {
   try {
     const citiesRef = db.collection("cities");
     const snapshot = await citiesRef.get();
-    const data = snapshot.docs.map((d) => ({ id: d.id, data: d.data() }));
+    const data = <City[]>snapshot.docs.map((d) => ({
+      id: d.id,
+      data: d.data(),
+    }));
     return data;
   } catch {
     throw new Error();
@@ -20,7 +24,7 @@ export async function getCity(city: string) {
     const citySlug = city.toLowerCase();
     const cityRef = db.collection("cities").doc(citySlug);
     const doc = await cityRef.get();
-    return doc.exists ? doc.data() : null;
+    return doc.exists ? <City>doc.data() : null;
   } catch {
     throw new Error();
   }
@@ -32,7 +36,7 @@ export async function getDay(day: string, city: string) {
     const citySlug = city.toLowerCase();
     const days = db.collection("days").doc(`${daySlug}_${citySlug}`);
     const doc = await days.get();
-    return doc.exists ? doc.data() : null;
+    return doc.exists ? <Day>doc.data() : null;
   } catch {
     throw new Error();
   }
