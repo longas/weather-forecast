@@ -31,9 +31,9 @@ const Layout: React.FC = ({ children }) => {
   };
 
   return (
-    <div className="p-6 flex flex-col items-center">
-      <div style={{ width: 600 }}>
-        <div className="w-full flex justify-between items-center">
+    <div className="p-4 md:p-6 flex flex-col items-center">
+      <div className="w-full md:w-forecast">
+        <div className="w-full flex justify-between items-center flex-wrap">
           <h1 className="text-4xl font-bold">Weather Forecast</h1>
 
           {selectOptions.length > 0 && (

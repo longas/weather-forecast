@@ -13,7 +13,7 @@ const WeekForecastList: React.FC<WeekForecastListProps> = ({
   selectDay,
 }) => {
   return (
-    <ul className="flex">
+    <ul className="w-full overflow-auto flex">
       {DAYS.map((d) => {
         const day = city.days.find((cd) => cd.id === d);
         return (

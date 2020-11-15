@@ -9,7 +9,11 @@ module.exports = {
       sans: ["Roboto", "sans-serif"],
       mono: ["Roboto Mono", "monospace"],
     },
-    extend: {},
+    extend: {
+      width: {
+        forecast: 600,
+      },
+    },
   },
   variants: {
     cursor: ["disabled"],

@@ -19,7 +19,7 @@ const DayForecast = () => {
   const chartData = useMemo(() => {
     if (!hours.length) return [];
     return hours.map((h, i) => ({
-      name: `Test ${i}`,
+      name: i,
       temperature: h.temperature,
     }));
   }, [hours]);
@@ -42,7 +42,7 @@ const DayForecast = () => {
         </ResponsiveContainer>
       </div>
 
-      <ul className="mt-5 grid grid-cols-6">
+      <ul className="mt-5 grid grid-cols-4 md:grid-cols-6">
         {dayHours.map((h, i) => {
           const hourString = `${h.toString().padStart(2, "0")}:00`;
           const hourData = hours[i];
