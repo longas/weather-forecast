@@ -5,7 +5,7 @@ import Select from "react-select";
 import { loadCities } from "../../redux/reducers";
 import { IStore } from "../../redux/store";
 import { CityBasic } from "../../types";
-import Footer from "./Footer";
+import Footer from "../Footer";
 
 const Layout: React.FC = ({ children }) => {
   const history = useHistory();
@@ -48,7 +48,9 @@ const Layout: React.FC = ({ children }) => {
 
         <div className="mt-6">{children}</div>
 
-        <Footer />
+        <div className="mt-6">
+          <Footer />
+        </div>
       </div>
     </div>
   );
