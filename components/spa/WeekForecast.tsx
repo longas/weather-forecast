@@ -23,7 +23,10 @@ const WeekForecast: React.FC<WeekForecastProps> = ({ cityId }) => {
   };
 
   return city ? (
-    <div className="bg-white border border-gray-400 shadow-md rounded">
+    <div
+      data-cy="city-forecast"
+      className="bg-white border border-gray-400 shadow-md rounded"
+    >
       <div className="px-5 py-3 flex justify-between items-center">
         <div>
           <h2 className="inline text-2xl font-bold">{city.name}</h2>
@@ -32,7 +35,12 @@ const WeekForecast: React.FC<WeekForecastProps> = ({ cityId }) => {
 
         <div>
           <Link href="/info">
-            <a className="text-sm text-blue-500 hover:text-blue-700">+info</a>
+            <a
+              data-cy="info"
+              className="text-sm text-blue-500 hover:text-blue-700"
+            >
+              +info
+            </a>
           </Link>
         </div>
       </div>

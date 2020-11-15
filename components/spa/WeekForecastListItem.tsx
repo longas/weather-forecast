@@ -27,6 +27,7 @@ const WeekForecastListItem: React.FC<WeekForecastListItemProps> = ({
   return (
     <li className="flex-shrink-0 flex-grow">
       <button
+        data-cy="day-forecast"
         className={`w-full h-full p-4 flex flex-col justify-center items-center border-t ${borderStyle} ${backgroundStyle} disabled:cursor-not-allowed`}
         onClick={() => {
           if (day) selectDay(day.id);

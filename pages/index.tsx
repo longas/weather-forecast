@@ -28,7 +28,10 @@ export default function Home({
           {cities.map((c) => (
             <li key={c.id}>
               <Link href={`/city/${c.id}`}>
-                <a className="px-4 py-2 font-mono md:text-xl uppercase font-bold bg-white rounded shadow hover:shadow-md transition-all duration-200">
+                <a
+                  data-cy="city"
+                  className="px-4 py-2 font-mono md:text-xl uppercase font-bold bg-white rounded shadow hover:shadow-md transition-all duration-200"
+                >
                   {c.name}
                 </a>
               </Link>

@@ -17,7 +17,10 @@ const DayForecast = () => {
   );
 
   return hours.length > 0 ? (
-    <div className="mt-4 bg-white border border-gray-400 shadow-md rounded">
+    <div
+      data-cy="hourly-forecast"
+      className="mt-4 bg-white border border-gray-400 shadow-md rounded"
+    >
       <h4 className="pt-4 pl-5 font-extrabold capitalize">{selectedDay}</h4>
 
       <div className="mt-6 px-6">
