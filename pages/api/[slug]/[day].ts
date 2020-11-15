@@ -1,70 +1,105 @@
+import Cors from "cors";
+import Joi from "joi";
 import { NextApiRequest, NextApiResponse } from "next";
 import {
-  deleteDayTemperatures,
-  getDay,
+  deleteCityDayTemperatures,
+  getCityDay,
   updateDayTemperatures,
 } from "../../../firebase/firestore";
+import { initAPIMiddleware, isValidDay } from "../../../utils";
 
-import Joi from "joi";
+const cors = initAPIMiddleware(Cors());
+
+async function get(res: NextApiResponse, city: string, day: string) {
+  try {
+    const data = await getCityDay(city, day);
+
+    if (data) {
+      res.json(data);
+    } else {
+      res.status(404).json({ error: "This city/day can't be found" });
+    }
+  } catch {
+    res.status(500).json({ error: "Internal error" });
+  }
+}
+
+async function post(
+  req: NextApiRequest,
+  res: NextApiResponse,
+  city: string,
+  day: string
+) {
+  // Check if its a valid day
+  if (!isValidDay(day)) {
+    return res.status(400).json({ error: `${day} is not a valid day` });
+  }
+
+  // Check if the payload is correct
+  const schema = Joi.array().min(1).items({
+    forecast: Joi.string().required(),
+    temperature: Joi.number().required(),
+  });
+
+  const { error } = schema.validate(req.body);
+
+  if (error) {
+    return res.status(400).json({ error: "Invalid payload" });
+  }
+
+  try {
+    const result = await updateDayTemperatures(city, day, req.body);
+
+    if (result) {
+      res.json(req.body);
+    } else {
+      res.status(404).json({ error: `${city} is not a valid city` });
+    }
+  } catch {
+    res.status(500).json({ error: "Internal error" });
+  }
+}
+
+async function remove(res: NextApiResponse, city: string, day: string) {
+  // Check if its a valid day
+  if (!isValidDay(day)) {
+    return res.status(400).json({ error: `${day} is not a valid day` });
+  }
+
+  try {
+    await deleteCityDayTemperatures(city, day);
+    res.json({ deleted: true });
+  } catch {
+    res.status(500).json({ error: "Internal error" });
+  }
+}
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
+  await cors(req, res);
+
   const {
-    query: { slug: citySlug, day },
+    query: { slug, day },
     method,
   } = req;
 
+  const citySlug = <string>slug;
+  const daySlug = <string>day;
+
   switch (method) {
     case "GET":
-      try {
-        const data = await getDay(day as string, citySlug as string);
-
-        if (data) {
-          res.json(data);
-        } else {
-          res.status(404).json({ error: "This city can't be found" });
-        }
-      } catch {
-        res.status(500).json({ error: "Internal error" });
-      }
+      get(res, citySlug, daySlug);
       break;
 
     case "POST":
-      const schema = Joi.array().items({
-        forecast: Joi.string().required(),
-        temperature: Joi.number().required(),
-      });
-
-      const { error } = schema.validate(req.body);
-
-      if (error) {
-        return res.status(427).json({ error: "Invalid payload" });
-      }
-
-      try {
-        await updateDayTemperatures(
-          day as string,
-          citySlug as string,
-          req.body
-        );
-        const data = await getDay(day as string, citySlug as string);
-        res.json(data);
-      } catch {
-        res.status(500).json({ error: "Internal error" });
-      }
+      post(req, res, citySlug, daySlug);
       break;
 
     case "DELETE":
-      try {
-        await deleteDayTemperatures(day as string, citySlug as string);
-        const data = await getDay(day as string, citySlug as string);
-        res.json(data);
-      } catch {
-        res.status(500).json({ error: "Internal error" });
-      }
+      remove(res, citySlug, daySlug);
       break;
 
     default:
-      res.setHeader("Allow", ["GET", "PUT"]);
+      res.setHeader("Allow", ["GET", "POST", "DELETE"]);
       res.status(405).end(`Method ${method} Not Allowed`);
   }
 };

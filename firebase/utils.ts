@@ -1,15 +1,5 @@
 import * as admin from "firebase-admin";
 
-export const DAYS = [
-  "monday",
-  "tuesday",
-  "wednesday",
-  "thursday",
-  "friday",
-  "saturday",
-  "sunday",
-];
-
 export function getFirestore() {
   // Check if the firebase app has been already initialized
   // this is needed for some serverless function enviroments

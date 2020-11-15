@@ -1,10 +1,9 @@
-import { GetStaticProps, InferGetStaticPropsType } from "next";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Head from "next/head";
-import Link from "next/link";
 import { getCities } from "../firebase/firestore";
 import { CityBasic } from "../types";
 
-export const getStaticProps: GetStaticProps<{
+export const getServerSideProps: GetServerSideProps<{
   cities: CityBasic[];
 }> = async () => {
   const cities = await getCities();
@@ -16,7 +15,7 @@ export const getStaticProps: GetStaticProps<{
 
 export default function Home({
   cities,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <div>
       <Head>
@@ -27,13 +26,11 @@ export default function Home({
       <main className="w-screen h-screen flex justify-center items-center">
         <ul className="flex space-x-8">
           {cities.map((c) => (
-            <li key={c.id}>
-              <Link href={`/city/${c.id}`}>
-                <a className="px-4 py-2 uppercase font-bold bg-white rounded shadow hover:shadow-md transition-all duration-200">
-                  {c.name}
-                </a>
-              </Link>
-            </li>
+            <div key={c.id}>
+              <h2>{c.name}</h2>
+              <h3>{c.country}</h3>
+              <p>{c.info}</p>
+            </div>
           ))}
         </ul>
       </main>

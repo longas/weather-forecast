@@ -1,17 +1,21 @@
-export type City = {
+export interface CityBasic {
   id: string;
-  data: {
-    name: string;
-    country: string;
-    info: string;
-  };
-};
+  name: string;
+  country: string;
+  info: string;
+}
 
-export type Day = {
+export interface Day {
+  id: string;
   average_temperature: number;
   forecast: string;
-  hourly_temperatures: {
-    forecast: string;
-    temperature: number;
-  }[];
-};
+}
+
+export interface City extends CityBasic {
+  days: Day[];
+}
+
+export interface Hour {
+  temperature: number;
+  forecast: string;
+}
