@@ -67,7 +67,7 @@ export const loadCity = (city: string) => async (dispatch, getState) => {
     }
 
     dispatch(setCity(cityData));
-  }, 5000);
+  }, 10000);
 
   dispatch(setCityFetchTimer(timerId));
 };
