@@ -18,7 +18,7 @@ const TemperaturesChart: React.FC<TemperaturesChartProps> = ({ hours }) => {
   return (
     <ResponsiveContainer width="100%" height={75}>
       <LineChart data={chartData}>
-        <Tooltip />
+        <Tooltip isAnimationActive={false} />
         <Line
           isAnimationActive={false}
           type="monotone"

@@ -15,6 +15,13 @@ export function setCity(city: City) {
   };
 }
 
+export function setCityFetchTimer(id: number) {
+  return {
+    type: types.SET_CITY_TIMER,
+    payload: id,
+  };
+}
+
 export function setHours(day, hours: Hour[]) {
   return {
     type: types.SET_HOURS,

@@ -8,6 +8,7 @@ export interface IStore {
   selectedCity: City;
   selectedDay: string;
   selectedCityHours: Hour[];
+  cityFetchTimerId: number;
 }
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
