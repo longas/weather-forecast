@@ -5,8 +5,14 @@ module.exports = {
   },
   purge: [],
   theme: {
+    fontFamily: {
+      sans: ["Roboto", "sans-serif"],
+      mono: ["Roboto Mono", "monospace"],
+    },
     extend: {},
   },
-  variants: {},
+  variants: {
+    cursor: ["disabled"],
+  },
   plugins: [],
-}
+};

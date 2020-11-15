@@ -6,6 +6,7 @@ import rootReducer from "./reducers";
 export interface IStore {
   cityList: CityBasic[];
   selectedCity: City;
+  selectedDay: string;
   selectedCityHours: Hour[];
 }
 

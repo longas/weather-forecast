@@ -15,9 +15,9 @@ export function setCity(city: City) {
   };
 }
 
-export function setHours(hours: Hour[]) {
+export function setHours(day, hours: Hour[]) {
   return {
     type: types.SET_HOURS,
-    payload: hours,
+    payload: { day, hours },
   };
 }

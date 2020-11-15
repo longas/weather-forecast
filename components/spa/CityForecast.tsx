@@ -4,9 +4,9 @@ import { useParams } from "react-router-dom";
 import { loadCity, loadDay } from "../../redux/reducers";
 import { IStore } from "../../redux/store";
 import { City, Hour } from "../../types";
-import { DAYS } from "../../utils";
+import WeekForecastList from "./WeekForecastList";
 
-const WeekForecast = () => {
+const CityForecast = () => {
   const { city: cityId } = useParams<{ city: string }>();
   const dispatch = useDispatch();
   const city = useSelector<IStore, City>((state) => state.selectedCity);
@@ -22,26 +22,17 @@ const WeekForecast = () => {
 
   return city ? (
     <div className="mt-4">
-      <h1 className="text-2xl font-bold">{city.name}</h1>
-      <h2 className="text-xl">{city.country}</h2>
+      <div
+        className="bg-white border border-gray-400 shadow-md rounded"
+        style={{ width: 500 }}
+      >
+        <div className="p-3">
+          <h1 className="inline text-2xl font-bold">{city.name}</h1>
+          <h2 className="inline text-xs uppercase">, {city.country}</h2>
+        </div>
 
-      <ul>
-        {DAYS.map((d) => {
-          const day = city.days.find((cd) => cd.id === d);
-
-          return (
-            <li key={d}>
-              {day ? (
-                <button
-                  onClick={() => selectDay(d)}
-                >{`${day.id}: ${day.average_temperature}ºC - ${day.forecast}`}</button>
-              ) : (
-                "No data"
-              )}
-            </li>
-          );
-        })}
-      </ul>
+        <WeekForecastList city={city} selectDay={selectDay} />
+      </div>
 
       <ul className="mt-8">
         {hours.map((h, i) => (
@@ -52,4 +43,4 @@ const WeekForecast = () => {
   ) : null;
 };
 
-export default WeekForecast;
+export default CityForecast;

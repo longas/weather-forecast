@@ -6,6 +6,7 @@ import * as type from "./types";
 const initialState: IStore = {
   cityList: [],
   selectedCity: null,
+  selectedDay: "",
   selectedCityHours: [],
 };
 
@@ -19,7 +20,11 @@ export default function rootReducer(
     case type.SET_CITY:
       return { ...state, selectedCity: action.payload };
     case type.SET_HOURS:
-      return { ...state, selectedCityHours: action.payload };
+      return {
+        ...state,
+        selectedDay: action.payload.day,
+        selectedCityHours: action.payload.hours,
+      };
     default:
       return state;
   }
@@ -35,11 +40,11 @@ export const loadCity = (city: string) => async (dispatch) => {
   const res = await fetch(`/api/${city}`);
   const data: City = await res.json();
   dispatch(setCity(data));
-  dispatch(setHours([]));
+  dispatch(setHours("", []));
 };
 
 export const loadDay = (city: string, day: string) => async (dispatch) => {
   const res = await fetch(`/api/${city}/${day}`);
   const data: Hour[] = await res.json();
-  dispatch(setHours(data));
+  dispatch(setHours(day, data));
 };

@@ -36,10 +36,14 @@ async function post(
   }
 
   // Check if the payload is correct
-  const schema = Joi.array().min(1).items({
-    forecast: Joi.string().required(),
-    temperature: Joi.number().required(),
-  });
+  const schema = Joi.array()
+    .min(1)
+    .items({
+      forecast: Joi.string()
+        .valid("clear", "cloudy", "partly-cloudy", "rain", "wind")
+        .required(),
+      temperature: Joi.number().required(),
+    });
 
   const { error } = schema.validate(req.body);
 
