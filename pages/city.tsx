@@ -9,11 +9,11 @@ export default function Test() {
   return (
     <Provider store={store}>
       <Router>
-        <Layout>
-          <Route path="/city/:city">
+        <Route path="/city/:city">
+          <Layout>
             <CityForecast />
-          </Route>
-        </Layout>
+          </Layout>
+        </Route>
       </Router>
     </Provider>
   );

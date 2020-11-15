@@ -6,10 +6,10 @@ const CityForecast = () => {
   const { city: cityId } = useParams<{ city: string }>();
 
   return (
-    <div className="mt-4">
+    <>
       <WeekForecast cityId={cityId} />
       <DayForecast />
-    </div>
+    </>
   );
 };
 

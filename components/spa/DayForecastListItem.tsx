@@ -23,7 +23,7 @@ const DayForecastListItem: React.FC<DayForecastListItemProps> = ({
               alt={hourData.forecast}
             />
 
-            <span className="text-xs font-bold mt-2">
+            <span className="text-sm font-bold mt-2">
               {hourData.temperature}ºC
             </span>
           </>

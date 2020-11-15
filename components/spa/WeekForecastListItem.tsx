@@ -4,11 +4,13 @@ import { IStore } from "../../redux/store";
 import { Day } from "../../types";
 
 interface WeekForecastListItemProps {
+  dayId: string;
   day: Day;
   selectDay: (day: string) => void;
 }
 
 const WeekForecastListItem: React.FC<WeekForecastListItemProps> = ({
+  dayId,
   day,
   selectDay,
 }) => {
@@ -31,25 +33,30 @@ const WeekForecastListItem: React.FC<WeekForecastListItemProps> = ({
         }}
         disabled={day === undefined}
       >
-        {day ? (
-          <>
-            <span className="text-sm font-mono font-bold capitalize">
-              {day.id.slice(0, 3)}
-            </span>
+        <span className="text-sm font-mono font-bold capitalize">
+          {dayId.slice(0, 3)}
+        </span>
 
-            <img
-              className="mt-2"
-              src={`/images/${day.forecast}.svg`}
-              alt={day.forecast}
-            />
+        <div
+          className="flex-grow flex flex-col justify-center items-center"
+          style={{ minHeight: 90 }}
+        >
+          {day ? (
+            <>
+              <img
+                className="mt-2"
+                src={`/images/${day.forecast}.svg`}
+                alt={day.forecast}
+              />
 
-            <span className="mt-2 font-extrabold">
-              {day.average_temperature}ºC
-            </span>
-          </>
-        ) : (
-          <span className="font-mono text-xs">No data</span>
-        )}
+              <span className="mt-2 font-extrabold">
+                {day.average_temperature}ºC
+              </span>
+            </>
+          ) : (
+            <span className="font-mono text-sm">No data</span>
+          )}
+        </div>
       </button>
     </li>
   );

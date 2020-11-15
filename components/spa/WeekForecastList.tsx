@@ -16,7 +16,14 @@ const WeekForecastList: React.FC<WeekForecastListProps> = ({
     <ul className="flex">
       {DAYS.map((d) => {
         const day = city.days.find((cd) => cd.id === d);
-        return <WeekForecastListItem key={d} day={day} selectDay={selectDay} />;
+        return (
+          <WeekForecastListItem
+            key={d}
+            dayId={d}
+            day={day}
+            selectDay={selectDay}
+          />
+        );
       })}
     </ul>
   );

@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Link from "next/link";
 import { loadCity, loadDay } from "../../redux/reducers";
 import { IStore } from "../../redux/store";
 import { City } from "../../types";
@@ -21,16 +22,19 @@ const WeekForecast: React.FC<WeekForecastProps> = ({ cityId }) => {
     dispatch(loadDay(cityId, day));
   };
 
-  console.log(city);
-
   return city ? (
-    <div
-      className="bg-white border border-gray-400 shadow-md rounded"
-      style={{ width: 500 }}
-    >
-      <div className="p-3">
-        <h1 className="inline text-2xl font-bold">{city.name}</h1>
-        <h2 className="inline text-xs uppercase">, {city.country}</h2>
+    <div className="bg-white border border-gray-400 shadow-md rounded">
+      <div className="px-5 py-3 flex justify-between items-center">
+        <div>
+          <h2 className="inline text-2xl font-bold">{city.name}</h2>
+          <h3 className="inline text-sm uppercase">, {city.country}</h3>
+        </div>
+
+        <div>
+          <Link href="/info">
+            <a className="text-sm text-blue-500 hover:text-blue-700">+info</a>
+          </Link>
+        </div>
       </div>
 
       <WeekForecastList city={city} selectDay={selectDay} />
