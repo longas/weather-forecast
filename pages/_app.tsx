@@ -7,7 +7,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <div suppressHydrationWarning>
       <Head>
-        <meta name="description" content="Weather Forecas App" />
+        <meta name="description" content="Weather Forecast App" />
         <meta name="author" content="Gabriel Longás Calvo" />
 
         <title>Weather Forecast</title>

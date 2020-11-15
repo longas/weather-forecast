@@ -36,13 +36,15 @@ const Layout: React.FC = ({ children }) => {
         <div className="w-full flex justify-between items-center flex-wrap">
           <h1 className="text-4xl font-bold">Weather Forecast</h1>
 
-          {selectOptions.length > 0 && (
+          {selectOptions.length > 0 ? (
             <Select
               defaultValue={selectOptions.find((o) => o.value === cityId)}
               onChange={selectCity}
               className="w-40"
               options={selectOptions}
             />
+          ) : (
+            <p className="font-mono">Loading cities...</p>
           )}
         </div>
 

@@ -39,7 +39,9 @@ const WeekForecast: React.FC<WeekForecastProps> = ({ cityId }) => {
 
       <WeekForecastList city={city} selectDay={selectDay} />
     </div>
-  ) : null;
+  ) : (
+    <p className="font-mono">Loading city...</p>
+  );
 };
 
 export default WeekForecast;

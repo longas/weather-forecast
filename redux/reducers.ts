@@ -50,17 +50,20 @@ export const loadCity = (city: string) => async (dispatch, getState) => {
   // Clear previous timer
   clearInterval(getState().cityFetchTimerId);
 
+  dispatch(setCity(null));
+  dispatch(setHours("", []));
   const cityData = await fetchCity(city);
   dispatch(setCity(cityData));
-  dispatch(setHours("", []));
 
   // Set new timer for periodic data polling
   const timerId = window.setInterval(async () => {
     const cityData = await fetchCity(city);
+    const selectedDay = getState().selectedDay;
 
     // Fetch the selected day aswell
-    if (getState().selectedDay) {
-      await loadDay(city, getState().selectedDay)(dispatch);
+    if (selectedDay) {
+      const dayData = await fetchDay(city, selectedDay);
+      dispatch(setHours(selectedDay, dayData));
     }
 
     dispatch(setCity(cityData));
@@ -69,8 +72,13 @@ export const loadCity = (city: string) => async (dispatch, getState) => {
   dispatch(setCityFetchTimer(timerId));
 };
 
-export const loadDay = (city: string, day: string) => async (dispatch) => {
+const fetchDay = async (city: string, day: string) => {
   const res = await fetch(`/api/${city}/${day}`);
-  const dayData: Hour[] = await res.json();
+  const data: Hour[] = await res.json();
+  return data;
+};
+
+export const loadDay = (city: string, day: string) => async (dispatch) => {
+  const dayData = await fetchDay(city, day);
   dispatch(setHours(day, dayData));
 };
