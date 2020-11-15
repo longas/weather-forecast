@@ -7,6 +7,8 @@ export interface CityBasic {
 
 export interface Day {
   id: string;
+  min_temperature: number;
+  max_temperature: number;
   average_temperature: number;
   forecast: string;
 }

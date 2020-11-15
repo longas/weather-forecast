@@ -11,7 +11,7 @@ module.exports = {
     },
     extend: {
       width: {
-        forecast: 600,
+        forecast: 700,
       },
     },
   },

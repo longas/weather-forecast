@@ -74,7 +74,14 @@ export async function updateDayTemperatures(
   const averageTemp = Math.round(
     data.reduce((a: number, b: any) => a + b.temperature, 0) / data.length
   );
-  batch.set(dayRef, { forecast, average_temperature: averageTemp });
+  const minTemp = Math.min(...data.map((d: any) => d.temperature));
+  const maxTemp = Math.max(...data.map((d: any) => d.temperature));
+  batch.set(dayRef, {
+    forecast,
+    average_temperature: averageTemp,
+    min_temperature: minTemp,
+    max_temperature: maxTemp,
+  });
 
   return batch.commit();
 }

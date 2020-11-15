@@ -25,9 +25,9 @@ const WeekForecastListItem: React.FC<WeekForecastListItemProps> = ({
     day && selectedDay === day.id ? "bg-gray-100" : "hover:bg-gray-100";
 
   return (
-    <li className="flex-grow">
+    <li className="flex-shrink-0 flex-grow">
       <button
-        className={`h-full p-4 flex flex-col justify-center items-center border-t ${borderStyle} ${backgroundStyle} disabled:cursor-not-allowed`}
+        className={`w-full h-full p-4 flex flex-col justify-center items-center border-t ${borderStyle} ${backgroundStyle} disabled:cursor-not-allowed`}
         onClick={() => {
           if (day) selectDay(day.id);
         }}
@@ -51,6 +51,10 @@ const WeekForecastListItem: React.FC<WeekForecastListItemProps> = ({
 
               <span className="mt-2 font-extrabold">
                 {day.average_temperature}ºC
+              </span>
+
+              <span className="mt-2 text-xs">
+                {day.max_temperature}ºC / {day.min_temperature}ºC
               </span>
             </>
           ) : (
