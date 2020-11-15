@@ -38,6 +38,9 @@ export const loadCities = () => async (dispatch) => {
 
 export const loadCity = (city: string) => async (dispatch) => {
   const res = await fetch(`/api/${city}`);
+
+  if (res.status === 404) return;
+
   const data: City = await res.json();
   dispatch(setCity(data));
   dispatch(setHours("", []));

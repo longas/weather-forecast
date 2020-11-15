@@ -14,7 +14,7 @@ const Layout: React.FC = ({ children }) => {
   }, [dispatch]);
 
   return (
-    <div>
+    <div className="p-6 flex flex-col items-center">
       <ul className="flex space-x-6">
         {cities.map((c) => (
           <li key={c.id}>
