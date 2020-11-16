@@ -1,186 +1,60 @@
-# API endpoints
+# How to use
 
-Base URL: _[final vercel deployment URL]_/api
+## Live
 
-## Cities
+Visit the [deployed website](https://weather-forecast-navy.vercel.app/).
 
-**GET** `/`
+## API
 
-Returns a list of all cities.
+See the [API documentation](API.md) for more information.
 
-```json
-Response:
+# Tech documentation
 
-[
-  {
-    "id": "zaragoza",
-    "data": {
-      "name": "Zaragoza",
-      "country": "Spain"
-    }
-  },
-  { ... },
-  { ... }
-]
-```
+This web application has been developed with **Next.js** and deployed to **Vercel**, Cloud Firestore (Firebase) is used as database.
 
-**GET** `/:id`
+After reading the requeriments document, Next.js was chosen for the following reasons:
 
-Retrieves the details of a city.
+- It gives you a complete solution to **build sites with React**.
+- It has many features production ready such as static & server rendering, TypeScript support, smart bundling and route pre-fetching.
+- It provides a [straightforward solution](https://nextjs.org/docs/api-routes/introduction) to build APIs.
+- It can be easily deployed to platforms such as **Netlify or Vercel**.
+- Zero-config client-server **code and typings sharing**.
 
-- id:
-  - zaragoza
-  - berlin
-  - new-york
+## Frontend
 
-```json
-Response:
+**Responsive web application** built with React, React Router, Redux and TailwindCSS among other libraries.
 
-{
-  "name": "Zaragoza",
-  "country": "Spain"
-}
-```
+### Home page
 
-## Days
+**Static page** that shows a list of links that take you to the cities' weather forecast page, links are **prefetched** in the background client-side to speed up future navigation. Data shown here is **fetched at build time** so it can be cached in Vercel's CDN ensuring fast loading times.
 
-**GET** `/:id/:day`
+### City page
 
-Retrieves the weather data of that day in the city.
+When users visit this page they are presented with the city's daily weather forecast for the current week. They can select a day and the page will display the hourly forecast for that day. This page is a **SPA**, meaning all data fetching, rendering and routing is handled by the client.
 
-- id:
+A [naive solution](https://github.com/longas/weather-forecast/blob/6df6898dd22886136f050d9437a3e6bd725b4d8e/redux/reducers.ts#L49-L73) was implemented to have **data polling**, every 10 seconds the client fetches the API to get updated data.
 
-  - zaragoza
-  - berlin
-  - new-york
+### Info page
 
-- day:
+Basic page where you can find additional information about the cities. This is used as an example of **server-side rendering** and how it could be used to make some pages less JavaScript-heavy for the client, improving SEO and perfomance on low-end devices.
 
-  - monday
-  - tuesday
-  - wednesday
-  - thursday
-  - friday
-  - saturday
-  - sunday
+## Backend / API
 
-```json
-Response:
+The API has been developed with [**API routes**](https://nextjs.org/docs/api-routes/introduction), a solution provided by Next.js and based in Node.js. It has express-like syntax and lets you use express middleware in a similar manner. This can be seen [when **CORS** is enabled](https://github.com/longas/weather-forecast/blob/6df6898dd22886136f050d9437a3e6bd725b4d8e/pages/api/index.ts#L9) at the API route level. Endpoints have been deployed as Serverless Functions to Vercel's network.
 
-{
-  "forecast": "clear",
-  "average_temperature": 13,
-  "hourly_temperatures": [
-    {
-      "temperature": 9,
-      "forecast": "clear"
-    },
-    {
-      "temperature": 10,
-      "forecast": "partly-cloudy"
-    },
-    {
-      "forecast": "partly-cloudy",
-      "temperature": 10
-    },
-    { ... },
-    { ... }
-  ]
-}
-```
+Firestore is used as database, some of the techniques used to model the data are:
 
-**POST** `/:id/:day`
+- Data duplication to eliminate unnecessary document reads.
+- Composite keys to get related data.
+- Batch writes to improve perfomance and ensure atomic operations.
+- Aggregation to store computed values.
 
-Updates the hourly temperatures for that day and city.
+## Quality assurance
 
-- id:
+These tools have been used to ensure QA while coding the solution:
 
-  - zaragoza
-  - berlin
-  - new-york
+- TypeScript: Static type checker, it can be seen as to be a form of inline automated testing.
+- ESLint: Tool to analyze code for potential errors without actually running the code.
+- Prettier: To format the code in a way that's consistent and legible every time.
 
-- day:
-
-  - monday
-  - tuesday
-  - wednesday
-  - thursday
-  - friday
-  - saturday
-  - sunday
-
-```json
-Payload example:
-
-[
-  {
-    "forecast": "clear",
-    "temperature": 9
-  },
-  {
-    "forecast": "partly-cloudy",
-    "temperature": 10
-  },
-  {
-    "forecast": "partly-cloudy",
-    "temperature": 10
-  },
-  { ... },
-  { ... }
-]
-```
-
-```json
-Response:
-
-{
-  "forecast": "clear",
-  "average_temperature": 13,
-  "hourly_temperatures": [
-    {
-      "forecast": "clear",
-      "temperature": 9
-    },
-    {
-      "forecast": "partly-cloudy",
-      "temperature": 10
-    },
-    {
-      "forecast": "partly-cloudy",
-      "temperature": 10
-    },
-    { ... },
-    { ... }
-  ]
-}
-```
-
-**DELETE** `/:id/:day`
-
-Deletes all weather data for a day and city.
-
-- id:
-
-  - zaragoza
-  - berlin
-  - new-york
-
-- day:
-
-  - monday
-  - tuesday
-  - wednesday
-  - thursday
-  - friday
-  - saturday
-  - sunday
-
-```json
-Response:
-
-{
-  "forecast": "",
-  "average_temperature": 0,
-  "hourly_temperatures": []
-}
-```
+Also [a few tests](/cypress/integration) have been written, these tests run under **Cypress** and check the navigation of the site.
