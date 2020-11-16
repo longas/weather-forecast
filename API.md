@@ -16,10 +16,10 @@ Response:
     "id": "zaragoza",
     "name": "Zaragoza",
     "country": "Spain",
-    "info": "Zaragoza is the capital city of..."
+    "info": "Zaragoza is the capital city o"
   },
-  { ... },
-  { ... }
+  { },
+  { }
 ]
 ```
 
@@ -39,7 +39,7 @@ Response:
   "id": "zaragoza",
   "name": "Zaragoza",
   "country": "Spain",
-  "info": "Zaragoza is the capital city of...",
+  "info": "Zaragoza is the capital city o",
   "days": [
     {
       "id": "monday",
@@ -48,8 +48,8 @@ Response:
       "average_temperature": 18,
       "forecast": "rain"
     },
-    { ... },
-    { ... }
+    { },
+    { }
   ]
 }
 ```
@@ -93,8 +93,8 @@ Response:
     "temperature": 10,
     "forecast": "rain"
   },
-  { ... },
-  { ... }
+  { },
+  { }
 ]
 ```
 
@@ -133,8 +133,8 @@ Payload example:
     "forecast": "partly-cloudy",
     "temperature": 10
   },
-  { ... },
-  { ... }
+  { },
+  { }
 ]
 
 * Allowed forecasts: "clear", "cloudy", "partly-cloudy", "rain", "wind".
@@ -156,8 +156,8 @@ Response:
     "forecast": "partly-cloudy",
     "temperature": 10
   },
-  { ... },
-  { ... }
+  { },
+  { }
 ]
 ```
 

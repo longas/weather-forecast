@@ -1,22 +1,39 @@
 # How to use
 
-## Live
+## Run locally
+
+### Web app
+
+- Clone this repository
+- `npm install`
+- Place `.env.local` in the root folder (_file sent in the email_)
+- `npm run build`
+- `npm start`
+- Go to [localhost:3000](http://localhost:3000)
+
+### Tests
+
+- Clone this repository
+- `npm install`
+- `npm run cy:open`
+
+## Live version
 
 Visit the [deployed website](https://weather-forecast-navy.vercel.app/).
 
-## API
+### API
 
 See the [API documentation](API.md) for more information.
 
 # Tech documentation
 
-This web application has been developed with **Next.js** and deployed to **Vercel**, Cloud Firestore (Firebase) is used as database.
+This web application was developed with **TypeScript**, **React** and **Next.js**. It has been deployed to **Vercel** while Cloud Firestore (Firebase) is used as database.
 
 After reading the requeriments document, Next.js was chosen for the following reasons:
 
 - It gives you a complete solution to **build sites with React**.
 - It has many features production ready such as static & server rendering, TypeScript support, smart bundling and route pre-fetching.
-- It provides a [straightforward solution](https://nextjs.org/docs/api-routes/introduction) to build APIs.
+- It provides a [straightforward solution](https://nextjs.org/docs/api-routes/introduction) to **build APIs**.
 - It can be easily deployed to platforms such as **Netlify or Vercel**.
 - Zero-config client-server **code and typings sharing**.
 
@@ -32,7 +49,7 @@ After reading the requeriments document, Next.js was chosen for the following re
 
 When users visit this page they are presented with the city's daily weather forecast for the current week. They can select a day and the page will display the hourly forecast for that day. This page is a **SPA**, meaning all data fetching, rendering and routing is handled by the client.
 
-A [naive solution](https://github.com/longas/weather-forecast/blob/6df6898dd22886136f050d9437a3e6bd725b4d8e/redux/reducers.ts#L49-L73) was implemented to have **data polling**, every 10 seconds the client fetches the API to get updated data.
+A naive solution was implemented to have **data polling**, every 10 seconds the client fetches the API to get updated data.
 
 ### Info page
 
