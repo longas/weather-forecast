@@ -38,6 +38,7 @@ const Layout: React.FC = ({ children }) => {
 
           {selectOptions.length > 0 ? (
             <Select
+              aria-label="City selector"
               defaultValue={selectOptions.find((o) => o.value === cityId)}
               onChange={selectCity}
               className="w-40"

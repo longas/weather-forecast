@@ -10,6 +10,7 @@ const Footer = () => {
         href="https://github.com/longas/weather-forecast"
         target="_blank"
         rel="noopener noreferrer"
+        title="GitHub"
       >
         <svg
           className="fill-current"

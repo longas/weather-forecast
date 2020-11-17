@@ -31,7 +31,7 @@ export default function Home({
                 <h2 className="text-3xl font-bold">{c.name}</h2>
 
                 <Link href={`/city/${c.id}`}>
-                  <a className="text-sm text-blue-500 hover:text-blue-700">
+                  <a className="text-sm text-blue-700 hover:text-blue-900">
                     Weather forecast
                   </a>
                 </Link>

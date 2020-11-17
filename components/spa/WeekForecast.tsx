@@ -37,7 +37,7 @@ const WeekForecast: React.FC<WeekForecastProps> = ({ cityId }) => {
           <Link href="/info">
             <a
               data-cy="info"
-              className="text-sm text-blue-500 hover:text-blue-700"
+              className="text-sm text-blue-800 hover:text-blue-900"
             >
               +info
             </a>

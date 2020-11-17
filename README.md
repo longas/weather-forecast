@@ -1,5 +1,13 @@
 # How to use
 
+## Live version
+
+Visit the [deployed website](https://weather-forecast-navy.vercel.app/).
+
+### API
+
+See the [API documentation](API.md) for more information.
+
 ## Run locally
 
 ### Web app
@@ -17,14 +25,6 @@
 - `npm install`
 - `npm run cy:open`
 
-## Live version
-
-Visit the [deployed website](https://weather-forecast-navy.vercel.app/).
-
-### API
-
-See the [API documentation](API.md) for more information.
-
 # Tech documentation
 
 This web application was developed with **TypeScript**, **React** and **Next.js**. It has been deployed to **Vercel** while Cloud Firestore (Firebase) is used as database.
@@ -32,8 +32,8 @@ This web application was developed with **TypeScript**, **React** and **Next.js*
 After reading the requeriments document, Next.js was chosen for the following reasons:
 
 - It gives you a complete solution to **build sites with React**.
-- It has many features production ready such as static & server rendering, TypeScript support, smart bundling and route pre-fetching.
-- It provides a [straightforward solution](https://nextjs.org/docs/api-routes/introduction) to **build APIs**.
+- It has many **features production ready** such as static & server rendering, TypeScript support, smart bundling and route pre-fetching.
+- It provides a straightforward solution to **build APIs**.
 - It can be easily deployed to platforms such as **Netlify or Vercel**.
 - Zero-config client-server **code and typings sharing**.
 
@@ -49,7 +49,9 @@ After reading the requeriments document, Next.js was chosen for the following re
 
 When users visit this page they are presented with the city's daily weather forecast for the current week. They can select a day and the page will display the hourly forecast for that day. This page is a **SPA**, meaning all data fetching, rendering and routing is handled by the client.
 
-A naive solution was implemented to have **data polling**, every 10 seconds the client fetches the API to get updated data.
+A basic chart is displayed when opening the hourly forecast of a day. This chart's components is being [lazy loaded](https://github.com/longas/weather-forecast/blob/c3ec13df016fee7bbac2bf363c6944083cd4887c/components/spa/DayForecast.tsx#L6) when the client requires it, otherwise the library used to draw it would add ~100kb of JavaScript to the bundle. Thanks to this the page stays around ~110kb and the [Largest Contentful Paint](https://web.dev/lcp/) doesn't suffer.
+
+Also a naive solution was implemented to have **data polling**, every 10 seconds the client fetches the API to get updated data.
 
 ### Info page
 
@@ -68,10 +70,10 @@ Firestore is used as database, some of the techniques used to model the data are
 
 ## Quality assurance
 
-These tools have been used to ensure QA while coding the solution:
+These tools have been used to ensure QA while developing the solution:
 
-- TypeScript: Static type checker, it can be seen as to be a form of inline automated testing.
+- TypeScript: Static type checker, it can be seen as being a form of inline automated testing.
 - ESLint: Tool to analyze code for potential errors without actually running the code.
-- Prettier: To format the code in a way that's consistent and legible every time.
+- Prettier: Code formatting so it's consistent and legible.
 
 Also [a few tests](/cypress/integration) have been written, these tests run under **Cypress** and check the navigation of the site.

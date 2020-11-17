@@ -1,19 +1,21 @@
 import { AppProps } from "next/app";
-import Head from "next/head";
+import { Helmet } from "react-helmet";
 import "../styles/global.css";
 import "../styles/tailwind.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <div suppressHydrationWarning>
-      <Head>
+      <Helmet>
+        <html lang="en" />
+
         <meta name="description" content="Weather Forecast App" />
         <meta name="author" content="Gabriel Longás Calvo" />
 
         <title>Weather Forecast</title>
 
         <link rel="shortcut icon" href="/favicon.ico" />
-      </Head>
+      </Helmet>
 
       {typeof window === "undefined" ? null : <Component {...pageProps} />}
     </div>
